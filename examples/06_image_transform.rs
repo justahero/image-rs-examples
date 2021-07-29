@@ -30,7 +30,9 @@ pub(crate) fn smoothstep(edge0: f32, edge1: f32, x: f32) -> f32 {
 
 fn main() -> anyhow::Result<()> {
     // load image from file, assuming it exist
-    let mut image = image::io::Reader::open("04.png").expect("Image not found").decode()?;
+    let mut image = image::io::Reader::open("04.png")
+        .expect("Image not found")
+        .decode()?;
 
     // create new image for adding vignette effect
     let mut vignette_image = RgbaImage::from_fn(image.width(), image.height(), |x, y| {

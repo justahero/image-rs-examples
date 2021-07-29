@@ -1,7 +1,7 @@
-use image::{DynamicImage, Rgb, RgbImage};
+use image::{Rgb, RgbImage};
 use minifb::{Key, Window, WindowOptions};
 
-fn generate_image(width: usize, height: usize) -> RgbImage {
+fn generate_image(width: u32, height: u32) -> RgbImage {
     let mut image = RgbImage::new(width as u32, height as u32);
     image
         .pixels_mut()
@@ -11,15 +11,15 @@ fn generate_image(width: usize, height: usize) -> RgbImage {
 
 fn main() -> anyhow::Result<()> {
     // create new image, set pixels by iterating over width / height
-    let width = 512usize;
-    let height = 512usize;
+    let width = 512;
+    let height = 512;
     let image = generate_image(width, height);
 
     // create new window
     let mut window = Window::new(
         "Test - ESC to exit",
-        width,
-        height,
+        width as usize,
+        height as usize,
         WindowOptions::default(),
     )?;
 
@@ -38,7 +38,7 @@ fn main() -> anyhow::Result<()> {
 
     // render image into window
     while window.is_open() && !window.is_key_down(Key::Escape) {
-        window.update_with_buffer(&image_buffer, width, height)?;
+        window.update_with_buffer(&image_buffer, width as usize, height as usize)?;
     }
 
     Ok(())
