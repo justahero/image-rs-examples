@@ -36,8 +36,7 @@ fn main() -> anyhow::Result<()> {
         *pixel = Rgba([r, g, b, 255]);
     };
 
-    // save image to file
-    image.save("04.png")?;
+    image.save("05.png")?;
 
     Ok(())
 }

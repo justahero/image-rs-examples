@@ -30,7 +30,7 @@ pub(crate) fn smoothstep(edge0: f32, edge1: f32, x: f32) -> f32 {
 
 fn main() -> anyhow::Result<()> {
     // load image from file, assuming it exist
-    let mut image = image::io::Reader::open("04.png")
+    let mut image = image::io::Reader::open("05.png")
         .expect("Image not found")
         .decode()?;
 
@@ -44,7 +44,7 @@ fn main() -> anyhow::Result<()> {
         let value: u8 = mix(255.0, 255.0 * vignette, ALPHA) as u8;
 
         // FIX THIS
-        Rgba([value, value, value, 255 - value])
+        Rgba([value, value, value, 0])
     });
 
     overlay(&mut image, &mut vignette_image, 0, 0);
