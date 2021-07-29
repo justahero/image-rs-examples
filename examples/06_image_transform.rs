@@ -34,8 +34,9 @@ fn main() -> anyhow::Result<()> {
         .expect("Image not found")
         .decode()?;
 
-    // create new image for adding vignette effect
+    // create new image using `RgbaImage::from_fn`
     let mut vignette_image = RgbaImage::from_fn(image.width(), image.height(), |x, y| {
+        // add a very simple vignette effect to the image based on distance from center
         let stx = (x as f32 / image.width() as f32) - 0.5;
         let sty = (y as f32 / image.height() as f32) - 0.5;
         let st_length = (stx * stx + sty * sty).sqrt();

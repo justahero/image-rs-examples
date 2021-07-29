@@ -3,7 +3,6 @@ use image::{Rgba, RgbaImage};
 const MAX_ITERATIONS: u32 = 256;
 
 fn main() -> anyhow::Result<()> {
-    // create new image, set pixels by iterating over width / height
     let width = 1024;
     let height = 1024;
 
