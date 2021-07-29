@@ -1,7 +1,7 @@
 use image::{GenericImage, GenericImageView, Rgba, RgbaImage};
 
 fn main() -> anyhow::Result<()> {
-    // create new image, set pixels by iterating over width / height
+    // create new image, iterate over each pixel
     let width = 512;
     let height = 512;
     let mut image = RgbaImage::new(width, height);

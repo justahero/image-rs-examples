@@ -3,7 +3,7 @@ use show_image::{ImageInfo, ImageView, WindowOptions, create_window};
 
 #[show_image::main]
 fn main() -> anyhow::Result<()> {
-    // create new image, set pixels by iterating over width / height
+    // create new image
     let width = 512;
     let height = 512;
     let mut image = RgbaImage::new(width, height);
