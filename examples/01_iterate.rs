@@ -10,7 +10,6 @@ fn main() {
             image.put_pixel(x, y, Rgb([0, 0, 255]));
         }
     }
-
     // voilá
     // now what?
 }
