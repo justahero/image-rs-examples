@@ -14,6 +14,8 @@ fn main() -> anyhow::Result<()> {
     let zoom: f32 = 1.0;
 
     let mut image = RgbaImage::new(width, height);
+
+    // algorithm is based on: https://www.geeksforgeeks.org/julia-fractal-python/
     for (x, y, pixel) in image.enumerate_pixels_mut() {
         let mut zx = 1.5 * (x as f32 - width as f32 / 2.0) / (0.5 * zoom * width as f32) + move_x;
         let mut zy = 1.0 * (y as f32 - height as f32 / 2.0) / (0.5 * zoom * height as f32) + move_y;
