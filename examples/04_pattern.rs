@@ -29,9 +29,9 @@ fn main() -> anyhow::Result<()> {
             iteration -= 1;
         }
 
-        let r = ((iteration << 21) >> 16 & 0xff) as u8;
-        let g = ((iteration << 10) >> 8 & 0xff) as u8;
-        let b = ((iteration * 8) & 0xff) as u8;
+        let r = ((iteration << 16) >> 16 & 0xff) as u8;
+        let g = ((iteration << 8) >> 8 & 0xff) as u8;
+        let b = ((iteration) & 0xff) as u8;
 
         *pixel = Rgba([r, g, b, 255]);
     };

@@ -1,6 +1,6 @@
 use image::{imageops::overlay, GenericImageView, Rgba, RgbaImage};
 
-const RADIUS: f32 = 0.75;
+const RADIUS: f32 = 0.70;
 const SOFTNESS: f32 = 0.35;
 const ALPHA: f32 = 0.65;
 
@@ -42,7 +42,7 @@ fn main() -> anyhow::Result<()> {
         let value: u8 = mix(255.0, 255.0 * vignette, ALPHA) as u8;
 
         // FIX THIS
-        Rgba([value, value, value, 255])
+        Rgba([value, value, value, 255 - value])
     });
 
     overlay(&mut image, &mut vignette_image, 0, 0);
