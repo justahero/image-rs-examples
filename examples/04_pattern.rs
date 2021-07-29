@@ -1,45 +1,38 @@
 use image::{Rgba, RgbaImage};
-use num_complex::Complex;
 
 const MAX_ITERATIONS: u32 = 256;
 
 fn main() -> anyhow::Result<()> {
     // create new image, set pixels by iterating over width / height
-    let width = 512;
-    let height = 512;
+    let width = 1024;
+    let height = 1024;
 
-    let cxmin = -2f32;
-    let cxmax = 1f32;
-    let cymin = -1.5f32;
-    let cymax = 1.5f32;
-
-    let scalex = (cxmax - cxmin) / width as f32;
-    let scaley = (cymax - cymin) / height as f32;
+    let cx: f32 = -0.7;
+    let cy: f32 = 0.27015;
+    let move_x = 0.0;
+    let move_y = 0.0;
+    let zoom: f32 = 1.0;
 
     let mut image = RgbaImage::new(width, height);
-    image
-        .enumerate_pixels_mut()
-        .for_each(|(x, y, pixel)| {
+    for (x, y, pixel) in image.enumerate_pixels_mut() {
+        let mut zx = 1.5 * (x as f32 - width as f32 / 2.0) / (0.5 * zoom * width as f32) + move_x;
+        let mut zy = 1.0 * (y as f32 - height as f32 / 2.0) / (0.5 * zoom * height as f32) + move_y;
 
-            let cx = cxmin + x as f32 * scalex;
-            let cy = cymin + y as f32 * scaley;
+        let mut iteration  = MAX_ITERATIONS;
+        while (zx * zx + zy * zy) < 4.0 && iteration > 1 {
+            let temp = zx * zx - zy * zy + cx;
+            zy = 2.0 * zx * zy + cy;
+            zx = temp;
 
-            let c = Complex::new(cx, cy);
-            let mut z = Complex::new(0f32, 0f32);
+            iteration -= 1;
+        }
 
-            let mut i: u32 = 0;
-            for t in 0..MAX_ITERATIONS {
-                if z.norm() > 2.0 {
-                    break;
-                }
-                z = z * z + c;
-                i = t;
-            }
+        let r = ((iteration << 21) >> 16 & 0xff) as u8;
+        let g = ((iteration << 10) >> 8 & 0xff) as u8;
+        let b = ((iteration * 8) & 0xff) as u8;
 
-            let i  = i as u8;
-
-            *pixel = Rgba([i, i, i, 255]);
-        });
+        *pixel = Rgba([r, g, b, 255]);
+    };
 
     // save image to file
     image.save("04.png")?;
