@@ -1,6 +1,7 @@
 use image::{Rgb, RgbImage};
 use minifb::{Key, Window, WindowOptions};
 
+// Generates a new image with given width and height
 fn generate_image(width: u32, height: u32) -> RgbImage {
     let mut image = RgbImage::new(width as u32, height as u32);
     image
@@ -10,7 +11,6 @@ fn generate_image(width: u32, height: u32) -> RgbImage {
 }
 
 fn main() -> anyhow::Result<()> {
-    // create new image, set pixels by iterating over width / height
     let width = 512;
     let height = 512;
     let image = generate_image(width, height);
@@ -26,7 +26,7 @@ fn main() -> anyhow::Result<()> {
     // Limit to max ~60 fps update rate
     window.limit_update_rate(Some(std::time::Duration::from_micros(16600)));
 
-    // convert image to image buffer
+    // convert `image::ImageBuffer<_>` to buffer (`Vec<u32>`)
     let mut image_buffer: Vec<u32> = vec![];
     image.pixels().for_each(|pixel| {
         // minifbn ignores alpha channel, uses `0RGB` format.
